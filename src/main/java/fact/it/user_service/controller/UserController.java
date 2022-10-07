@@ -15,7 +15,6 @@ import java.util.Optional;
 import java.util.Random;
 
 @RestController
-@RequestMapping("/userapi")
 public class UserController {
     @Autowired
     private UserRepository userRepo;
