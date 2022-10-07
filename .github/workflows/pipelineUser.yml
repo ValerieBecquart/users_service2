@@ -36,7 +36,7 @@ jobs:
 
 
       - name: Build with Maven
-        run: mvn --batch-mode --update-snapshots package --log-file ./mvn.log clean compile
+        run: mvn --batch-mode --update-snapshots package
 
       - run: mkdir staging && cp target/*.jar staging
       - uses: actions/upload-artifact@v3
