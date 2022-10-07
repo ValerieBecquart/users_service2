@@ -26,7 +26,6 @@ public class UserController {
 
     @PostConstruct
     public void fillDatabaseTemporary(){
-        userRepo.deleteAll();
         if(userRepo.count()==0) {
             Random rnd = new Random();
             for (int j = 0; j < 10; j++) {
