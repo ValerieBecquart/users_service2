@@ -19,6 +19,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepo;
 
+
+       private Random rnd = new Random();
+
     public UserController(UserRepository userRepository) {
         this.userRepo = userRepository;
     }
@@ -26,7 +29,6 @@ public class UserController {
     @PostConstruct
     public void fillDatabaseTemporary(){
         if(userRepo.count()==0) {
-            Random rnd = new Random();
             for (int j = 0; j < 10; j++) {
                 User user = new User();
                 user.setUserID("u" + j);
@@ -35,7 +37,6 @@ public class UserController {
                 user.setEmail("user" + j + "@test.com");
                 user.setScore(rnd.nextInt(50));
                 userRepo.save(user);
-System.out.println(user.toString());
             }
         }
 
