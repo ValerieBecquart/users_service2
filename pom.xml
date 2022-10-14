@@ -16,7 +16,7 @@
          
      <properties>
         <java.version>11</java.version>
-        <sonar.organization>ValerieBecquart</sonar.organization>
+        <sonar.organization>valeriebecquart</sonar.organization>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
          
