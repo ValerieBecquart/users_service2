@@ -17,6 +17,7 @@
      <properties>
         <java.version>11</java.version>
         <sonar.organization>valeriebecquart</sonar.organization>
+        <sonar.projectKey>vb_users_service2</sonar.projectKey>
         <sonar.host.url>https://sonarcloud.io</sonar.host.url>
     </properties>
          
