@@ -37,10 +37,10 @@ jobs:
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=ValerieBecquart_users_service2
 
       - name: Docker login
-        run: docker login -u ${{ secrets.DOCKER_USER }} -p ${{ secrets.DOCKER_PASSWORD }}
+        run: docker login -u ${{secrets.DOCKER_USER}} -p ${{secrets.DOCKER_PASSWORD}}
 
       - name: Docker Build
-        run: docker build -t ${{ secrets.DOCKER_USER }}/users_service2:latest .
+        run: docker build -t ${{secrets.DOCKER_USER}}/users_service2:latest .
 
       - name: Upload container to Docker Hub with Push
-        run: docker push ${{ secrets.DOCKER_USER }}/users_service2:latest
+        run: docker push ${{secrets.DOCKER_USER}}/users_service2:latest
