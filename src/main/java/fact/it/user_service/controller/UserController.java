@@ -31,7 +31,7 @@ public class UserController {
         if(userRepo.count()==0) {
             for (int j = 0; j < 10; j++) {
                 User user = new User();
-                user.setUserID("u" + j);
+                user.setUserID( j);
                 user.setName("User " + j);
                 user.setAvatarID(j);
                 user.setEmail("user" + j + "@test.com");
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @GetMapping("user/{userID}")
-    public User getUserById(@PathVariable String userID){
+    public User getUserById(@PathVariable int userID){
         return userRepo.findByUserID(userID);
     }
     //create
@@ -63,7 +63,7 @@ public User create(@RequestBody User user){
 }
 //replace
 @PutMapping("/users/{userID}")
-    public ResponseEntity<User> changeScore(@RequestBody User userToUpdate, @PathVariable String userID)
+    public ResponseEntity<User> changeScore(@RequestBody User userToUpdate, @PathVariable int userID)
     {
         Optional<User> user1 = Optional.ofNullable(userRepo.findByUserID(userID));
         if (user1.isPresent()) {
@@ -78,7 +78,7 @@ public User create(@RequestBody User user){
         return new ResponseEntity<>( HttpStatus.NOT_FOUND);
     }
     @DeleteMapping("/users/{userID}")
-    public ResponseEntity<Integer>deleteUser(@PathVariable String userID){
+    public ResponseEntity<Integer>deleteUser(@PathVariable int userID){
         Optional<User>user= Optional.ofNullable(userRepo.findByUserID(userID));
         if(user.isPresent()){
             User userToDelete = user.get();
