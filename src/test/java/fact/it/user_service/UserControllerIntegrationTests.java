@@ -13,7 +13,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @SpringBootTest //the class as a class that contains tests
 @AutoConfigureMockMvc // sets up theMockMvc object for us to inject
-public class UserControllerIntegrationTest {
+public class UserControllerIntegrationTests {
     @Autowired
     private MockMvc mockMvc;
 
