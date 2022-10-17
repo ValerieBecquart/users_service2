@@ -15,13 +15,13 @@ import org.springframework.test.web.servlet.MockMvc;
 @AutoConfigureMockMvc //sets up the MockMvc object for us to inject
 public class UserControllerUnitTests {
 
-    @Autowired
-    private MockMvc mockMvc;
-
-    @MockBean //uses Mockito to create a ReviewRepository mock which we can fully control as to which response it will give to which method call
-    private UserRepository userRepository;
-
-    private ObjectMapper mapper = new ObjectMapper();
-    @Test
-    public void tospecify(){}
+//    @Autowired
+//    private MockMvc mockMvc;
+//
+//    @MockBean //uses Mockito to create a ReviewRepository mock which we can fully control as to which response it will give to which method call
+//    private UserRepository userRepository;
+//
+//    private ObjectMapper mapper = new ObjectMapper();
+//    @Test
+//    public void tospecify(){}
 }
