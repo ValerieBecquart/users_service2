@@ -13,6 +13,6 @@ public interface UserRepository extends MongoRepository<User, String> {
 
 
    List<User> findAll();
-List<User>findAllByOrderByScoreDesc();
+List<User>findFirst5ByOrderByScoreDesc();
 
 }

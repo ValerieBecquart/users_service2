@@ -1,6 +1,7 @@
 package fact.it.user_service.controller;
 
 import fact.it.user_service.model.User;
+import fact.it.user_service.model.UserDTO;
 import fact.it.user_service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -29,9 +30,9 @@ public class UserController {
     @PostConstruct
     public void fillDatabaseTemporary(){
         if(userRepo.count()==0) {
-            for (int j = 0; j < 10; j++) {
+            for (int j = 0; j < 20; j++) {
                 User user = new User();
-                user.setUserID( j);
+                user.setUserID(j);
                 user.setName("User " + j);
                 user.setAvatarID(j);
                 user.setEmail("user" + j + "@test.com");
@@ -47,25 +48,29 @@ public class UserController {
     }
 
     @GetMapping("/scores")
-    public List<User>getAllScoresAsc(){
-        return userRepo.findAllByOrderByScoreDesc();
+    public List<User>getTop5HighScoresAsc(){
+        return userRepo.findFirst5ByOrderByScoreDesc();
     }
 
     @GetMapping("user/{userID}")
     public User getUserById(@PathVariable int userID){
         return userRepo.findByUserID(userID);
     }
+
     //create
-@PostMapping("/users")
-public User create(@RequestBody User user){
-        userRepo.save(user);
-        return user;
+@PostMapping("/user")
+public User create(@RequestBody UserDTO user){
+
+        User peristentUser = new User(user.getUserID(), user.getName(),user.getEmail(),user.getAvatarID(),user.getScore());
+
+        userRepo.save(peristentUser);
+        return peristentUser;
 }
 //replace
-@PutMapping("/users/{userID}")
-    public ResponseEntity<User> changeScore(@RequestBody User userToUpdate, @PathVariable int userID)
+@PutMapping("/user")
+    public ResponseEntity<Void> updateScore(@RequestBody UserDTO userToUpdate)
     {
-        Optional<User> user1 = Optional.ofNullable(userRepo.findByUserID(userID));
+        Optional<User> user1 = Optional.ofNullable(userRepo.findByUserID(userToUpdate.getUserID()));
         if (user1.isPresent()) {
             User u = user1.get();
             u.setScore(userToUpdate.getScore());
@@ -73,18 +78,18 @@ public User create(@RequestBody User user){
             u.setEmail(userToUpdate.getEmail());
             u.setAvatarID(userToUpdate.getAvatarID());
             userRepo.save(u);
-            return new ResponseEntity<>( u, HttpStatus.OK);
+            return new ResponseEntity<>( HttpStatus.OK);
         }
         return new ResponseEntity<>( HttpStatus.NOT_FOUND);
     }
-    @DeleteMapping("/users/{userID}")
-    public ResponseEntity<Integer>deleteUser(@PathVariable int userID){
+    @DeleteMapping("/user/{userID}")
+    public ResponseEntity<Void>deleteUser(@PathVariable int userID){
         Optional<User>user= Optional.ofNullable(userRepo.findByUserID(userID));
         if(user.isPresent()){
             User userToDelete = user.get();
             userRepo.delete(userToDelete);
-            return new ResponseEntity<>(userRepo.findAll().size(), HttpStatus.OK);
+            return new ResponseEntity<>( HttpStatus.OK);
         }
-        return new ResponseEntity<>(userRepo.findAll().size(),HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 }
