@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest //the class as a class that contains tests
 @AutoConfigureMockMvc // sets up theMockMvc object for us to inject
-public class UserControllerIntegrationTests {
+ class UserControllerIntegrationTests {
     @Autowired
     private MockMvc mockMvc;
 
@@ -55,7 +55,7 @@ private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
     private ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void whenGetAllUsers_thenReturnJsonUser() throws Exception{
+     void whenGetAllUsers_thenReturnJsonUser() throws Exception{
         mockMvc.perform(get("/users"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -78,7 +78,7 @@ private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
                 .andExpect(jsonPath("$[2].score",is(20)));
     };
     @Test
-    public void whenGetTop5HighScores_thenReturnJsonUser() throws Exception{
+     void whenGetTop5HighScores_thenReturnJsonUser() throws Exception{
         mockMvc.perform(get("/scores"))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -105,7 +105,7 @@ private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
 
 
     @Test
-    public void givenUserId_whenGetUserbyUserId_thenReturnJsonUser() throws Exception{
+     void givenUserId_whenGetUserbyUserId_thenReturnJsonUser() throws Exception{
         mockMvc.perform(get("/user/{userID}", 3))
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -116,7 +116,7 @@ private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
                 .andExpect(jsonPath("$.score",is(20)));
     };
     @Test
-    public void whenPostUser_thenReturnJsonUser()throws Exception {
+     void whenPostUser_thenReturnJsonUser()throws Exception {
         User user5= new User(10,"Charles","charles@king.com",5,150);
 
 
@@ -132,7 +132,7 @@ private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
                 .andExpect(jsonPath("$.score", is(150)));
     }
     @Test
-    public void givenUser_whenUpdateScore_thenStatusOk() throws Exception{
+     void givenUser_whenUpdateScore_thenStatusOk() throws Exception{
         UserDTO userDTO=new UserDTO(1,"Harry","harry@test1.com",1,150);
 
         mockMvc.perform(put("/user")
@@ -142,7 +142,7 @@ private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
 
     }
     @Test
-    public void givenUser_whenUpdateScore_thenStatusNotFound() throws Exception{
+     void givenUser_whenUpdateScore_thenStatusNotFound() throws Exception{
         UserDTO userDTO=new UserDTO(10,"Harry","harry@test1.com",1,150);
 
         mockMvc.perform(put("/user")
@@ -152,7 +152,7 @@ private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
 
     }
     @Test
-    public void givenUser_whenDeleteUser_thenStatusOk()throws Exception {
+     void givenUser_whenDeleteUser_thenStatusOk()throws Exception {
 
         mockMvc.perform(delete("/user/{userID}",1)
                         .contentType(MediaType.APPLICATION_JSON))
@@ -160,7 +160,7 @@ private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
 
     }
     @Test
-    public void givenUser_whenDeleteUser__thenStatusNotFound()throws Exception {
+     void givenUser_whenDeleteUser__thenStatusNotFound()throws Exception {
 
         mockMvc.perform(delete("/user/{userID}",10)
                         .contentType(MediaType.APPLICATION_JSON))
