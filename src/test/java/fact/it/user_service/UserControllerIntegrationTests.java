@@ -28,11 +28,21 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @Autowired
     private UserRepository userRepository;
 
-private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
+    private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
     private User user2 = new User(2,"Meghan", "meghan@test1.com",2,5);
     private User user3 = new User(3,"Kate", "kate@test1.com",3,20);
+    User user4 = new User();
+
    // private User user4 = new User(4,"William", "William@test1.com",4,100);
    // private User userToDelete = new User(5,"Charles", "charles@test1.com",5,150);
+
+    public void init(){
+        user4.setUserID(4);
+        user4.setName("William");
+        user4.setAvatarID(4);
+        user4.setEmail("William@test1.com");
+        user4.setScore(100);
+    }
 
    // Delete ALL data in the test DB
     // Insert testdata
@@ -42,6 +52,7 @@ private User user1 = new User(1,"Harry", "harry@test1.com",1,0);
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
+        userRepository.save(user4);
       //  userRepository.save(user4);
        // userRepository.save(userToDelete);
     }
