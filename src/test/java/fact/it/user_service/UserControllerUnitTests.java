@@ -16,6 +16,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
@@ -38,7 +39,7 @@ public class UserControllerUnitTests {
 
     private ObjectMapper mapper = new ObjectMapper();
     @Test
-    public void given_WhenGetTop5HighScores_thenReturnJsonUser() throws Exception {
+    public void given_WhenGetTop5HighScores_thenReturnJsonList() throws Exception {
         User u3 = new User(1,"Harry", "harry@test1.com",1,0);
         User u2 = new User(2,"Meghan", "meghan@test1.com",2,5);
         User u1 = new User(3,"Kate", "kate@test1.com",3,20);
@@ -127,4 +128,55 @@ given(userRepository.findByUserID(1)).willReturn(user);
                 .andExpect(status().isNotFound());
 
     }
+    @Test
+    public void given_WhenGetUsers_thenReturnJsonList() throws Exception {
+        User u3 = new User(1,"Harry", "harry@test1.com",1,0);
+        User u2 = new User(2,"Meghan", "meghan@test1.com",2,5);
+        User u1 = new User(3,"Kate", "kate@test1.com",3,20);
+        List<User> userList = Arrays.asList(u1,u2,u3);
+
+        given(userRepository.findAll()).willReturn(userList);
+        mockMvc.perform(get("/users"))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].userID",is(3)))
+                .andExpect(jsonPath("$[0].name",is("Kate")))
+                .andExpect(jsonPath("$[0].email",is("kate@test1.com")))
+                .andExpect(jsonPath("$[0].avatarID",is(3)))
+                .andExpect(jsonPath("$[0].score",is(20)))
+
+                .andExpect(jsonPath("$[1].userID",is(2)))
+                .andExpect(jsonPath("$[1].name",is("Meghan")))
+                .andExpect(jsonPath("$[1].email",is("meghan@test1.com")))
+                .andExpect(jsonPath("$[1].avatarID",is(2)))
+                .andExpect(jsonPath("$[1].score",is(5)))
+
+
+                .andExpect(jsonPath("$[2].userID",is(1)))
+                .andExpect(jsonPath("$[2].name",is("Harry")))
+                .andExpect(jsonPath("$[2].email",is("harry@test1.com")))
+                .andExpect(jsonPath("$[2].avatarID",is(1)))
+                .andExpect(jsonPath("$[2].score",is(0)));
+
+    }
+
+    @Test
+    public void givenUserID_WhenGetUserID_thenReturnJsonUser() throws Exception {
+
+        User u1 = new User(1,"Kate", "kate@test1.com",3,20);
+
+        given(userRepository.findByUserID(1)).willReturn(u1);
+        mockMvc.perform(get("/user/{userID}",1))
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userID",is(1)))
+                .andExpect(jsonPath("$.name",is("Kate")))
+                .andExpect(jsonPath("$.email",is("kate@test1.com")))
+                .andExpect(jsonPath("$.avatarID",is(3)))
+                .andExpect(jsonPath("$.score",is(20)));
+
+
+
+    }
+
 }
