@@ -20,7 +20,7 @@ public class User {
     }
 
     public User(int userID, String name, String email, int avatarID, int score) {
-this.userID=userID;
+        this.userID=userID;
         this.name = name;
         this.email = email;
         this.avatarID = avatarID;
