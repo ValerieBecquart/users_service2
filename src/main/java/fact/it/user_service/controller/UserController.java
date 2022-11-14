@@ -58,18 +58,17 @@ public class UserController {
     }
 
     //create
-@PostMapping("/user")
-public User create(@RequestBody UserDTO user){
+    @PostMapping("/user")
+    public User create(@RequestBody UserDTO user){
 
         User peristentUser = new User(user.getUserID(), user.getName(),user.getEmail(),user.getAvatarID(),user.getScore());
 
         userRepo.save(peristentUser);
         return peristentUser;
 }
-//replace
-@PutMapping("/user")
-    public ResponseEntity<Void> updateScore(@RequestBody UserDTO userToUpdate)
-    {
+    //replace
+    @PutMapping("/user")
+    public ResponseEntity<Void> updateScore(@RequestBody UserDTO userToUpdate) {
         Optional<User> user1 = Optional.ofNullable(userRepo.findByUserID(userToUpdate.getUserID()));
         if (user1.isPresent()) {
             User u = user1.get();
@@ -82,6 +81,7 @@ public User create(@RequestBody UserDTO user){
         }
         return new ResponseEntity<>( HttpStatus.NOT_FOUND);
     }
+
     @DeleteMapping("/user/{userID}")
     public ResponseEntity<Void>deleteUser(@PathVariable int userID){
         Optional<User>user= Optional.ofNullable(userRepo.findByUserID(userID));

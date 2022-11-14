@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
         user4.setName("William");
         user4.setAvatarID(4);
         user4.setEmail("William@test1.com");
-        user4.setScore(100);
+        user4.setScore(0);
     }
 
    // Delete ALL data in the test DB
@@ -49,6 +49,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
     @BeforeEach
     public void beforeAllTests(){
         userRepository.deleteAll();
+        init();
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(user3);
@@ -86,7 +87,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 .andExpect(jsonPath("$[2].name",is("Kate")))
                 .andExpect(jsonPath("$[2].email",is("kate@test1.com")))
                 .andExpect(jsonPath("$[2].avatarID",is(3)))
-                .andExpect(jsonPath("$[2].score",is(20)));
+                .andExpect(jsonPath("$[2].score",is(20)))
+
+                .andExpect(jsonPath("$[3].userID",is(4)))
+                .andExpect(jsonPath("$[3].name",is("William")))
+                .andExpect(jsonPath("$[3].email",is("William@test1.com")))
+                .andExpect(jsonPath("$[3].avatarID",is(4)))
+                .andExpect(jsonPath("$[3].score",is(0)));
     };
     @Test
      void whenGetTop5HighScores_thenReturnJsonUser() throws Exception{
@@ -106,11 +113,17 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
                 .andExpect(jsonPath("$[1].score",is(5)))
 
 
-                   .andExpect(jsonPath("$[2].userID",is(1)))
+                .andExpect(jsonPath("$[2].userID",is(1)))
                 .andExpect(jsonPath("$[2].name",is("Harry")))
                 .andExpect(jsonPath("$[2].email",is("harry@test1.com")))
                 .andExpect(jsonPath("$[2].avatarID",is(1)))
-                .andExpect(jsonPath("$[2].score",is(0)));
+                .andExpect(jsonPath("$[2].score",is(0)))
+
+                .andExpect(jsonPath("$[3].userID",is(4)))
+                .andExpect(jsonPath("$[3].name",is("William")))
+                .andExpect(jsonPath("$[3].email",is("William@test1.com")))
+                .andExpect(jsonPath("$[3].avatarID",is(4)))
+                .andExpect(jsonPath("$[3].score",is(0)));
 
     };
 
