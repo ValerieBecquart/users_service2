@@ -36,7 +36,7 @@ public class UserController {
                 user.setName("User " + j);
                 user.setAvatarID(rnd.nextInt(5) + 1);
                 user.setEmail("user" + j + "@test.com");
-                user.setScore(rnd.nextInt(50));
+                user.setScore(rnd.nextInt(10));
                 userRepo.save(user);
             }
         }
